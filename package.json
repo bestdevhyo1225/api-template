@@ -1,8 +1,8 @@
 {
   "name": "typescript-api-server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Simple API Server",
+  "main": "src/index.ts or dist/index.js",
   "scripts": {
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint --fix src/**/*.ts",
