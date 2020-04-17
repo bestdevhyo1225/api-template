@@ -1,0 +1,35 @@
+{
+  "presets": [
+    [
+      "@babel/env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/typescript"
+  ],
+  "plugins": [
+    "@babel/proposal-class-properties",
+    "@babel/proposal-object-rest-spread",
+    "@babel/proposal-optional-chaining",
+    "@babel/transform-destructuring",
+    "@babel/transform-runtime",
+    "@babel/transform-async-to-generator",
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "common": "./src/common",
+          "domain": "./src/domain",
+          "web": "./src/web",
+          "es": "./src/repositories/es",
+          "sqs": "./src/repositories/sqs",
+          "infrastructure": "./src/infrastructure"
+        }
+      }
+    ]
+  ]
+}
