@@ -1,4 +1,4 @@
-import { ConfigIndex } from '../utils/type-interface';
+import { ConfigIndex } from 'common/utils/interfaces/config';
 
 const requireProcessEnv = (name: string): string => {
   if (!process.env[name]) {
