@@ -1,0 +1,21 @@
+name: TypeScript API Template CI
+
+on:
+  pull_request:
+    branches:
+      - master
+      - stage
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
