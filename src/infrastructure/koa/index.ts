@@ -2,8 +2,8 @@ import { loadControllers, scopePerRequest } from 'awilix-koa';
 import Router from 'koa-router';
 import Koa from 'koa';
 
-import { ConfigAll } from '../../common/utils/type-interface';
-import config from '../../common/config';
+import { ConfigAll } from 'common/utils/interfaces/config';
+import config from 'common/config';
 import container from '../../container';
 import middlewares from './middlewares';
 

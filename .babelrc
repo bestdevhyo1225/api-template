@@ -23,11 +23,10 @@
         "root": ["."],
         "alias": {
           "common": "./src/common",
+          "data": "./src/data",
           "domain": "./src/domain",
-          "web": "./src/web",
-          "es": "./src/repositories/es",
-          "sqs": "./src/repositories/sqs",
-          "infrastructure": "./src/infrastructure"
+          "infrastructure": "./src/infrastructure",
+          "web": "./src/web"
         }
       }
     ]

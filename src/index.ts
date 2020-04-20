@@ -1,3 +1,3 @@
-import koa from './infrastructure/koa';
+import koa from 'infrastructure/koa';
 
 koa();
