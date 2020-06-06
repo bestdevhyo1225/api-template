@@ -1,18 +1,19 @@
 import glob from 'glob';
+import logger from '@seoulstore/mali-logger';
 import Mali, { Context } from 'mali';
 import { AwilixContainer } from 'awilix';
-// import maliLogger from '@seoulstore/mali-logger';
+import { ConfigAll } from '@common/types/config/all';
 import addController from '@web/grpc';
 import config from '@common/config';
 
 export default (container: AwilixContainer): void => {
-  const { host, port } = config;
+  const { host, port }: ConfigAll = config;
 
   let app: Mali = new Mali();
 
-  glob.sync('idl/user.proto').forEach(file => app.addService(file, ''));
+  glob.sync('idl/*.proto').forEach(file => app.addService(file, ''));
 
-  // app.use(maliLogger());
+  app.use(logger());
 
   app = addController(app, container);
 
