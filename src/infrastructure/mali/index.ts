@@ -1,9 +1,9 @@
 import glob from 'glob';
 import Mali, { Context } from 'mali';
+import { AwilixContainer } from 'awilix';
 // import maliLogger from '@seoulstore/mali-logger';
 import addController from '@web/grpc';
 import config from '@common/config';
-import { AwilixContainer } from 'awilix';
 
 export default (container: AwilixContainer): void => {
   const { host, port } = config;
