@@ -41,9 +41,13 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: NPM Install
+      - name: Copy Env Sample File
         run: |
           cp .env.sample ./.env
+
+      - name: NPM Install
+        if: steps.cache-node-module.outputs.cache-hit != 'true'
+        run: |
           npm install
 
       - name: NPM Lint & Type-Check
