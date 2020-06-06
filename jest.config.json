@@ -1,0 +1,23 @@
+{
+  "testEnvironment": "node",
+  "moduleFileExtensions": ["ts", "js"],
+  "modulePaths": ["<rootDir>/src/", "<rootDir>/test/"],
+  "globalSetup": "<rootDir>/test/jest.global.ts",
+  "globalTeardown": "<rootDir>/test/jest.teardown.ts",
+  "moduleNameMapper": {
+    "@infrastructure/(.*)": "<rootDir>/src/infrastructure/$1",
+    "@common/(.*)": "<rootDir>/src/common/$1",
+    "@domain/(.*)": "<rootDir>/src/domain/$1",
+    "@data/(.*)": "<rootDir>/src/data/$1",
+    "@web/(.*)": "<rootDir>/src/web/$1"
+  },
+  "transform": { "^.+\\.(ts)?$": "ts-jest" },
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "globals": {
+    "ts-jest": {
+      "diagnostics": true
+    }
+  },
+  "silent": true,
+  "verbose": true
+}

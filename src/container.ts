@@ -1,23 +1,29 @@
-import { createContainer, asClass, InjectionMode, Lifetime, GlobWithOptions } from 'awilix';
 import path from 'path';
+import { Connection } from 'typeorm';
+import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asValue } from 'awilix';
+import TypeOrmUserRepository from '@data/User/TypeOrmUserRepository';
 
-const container = createContainer({
-  injectionMode: InjectionMode.CLASSIC,
-});
+export const initContainer = async (dbConnection: Connection): Promise<AwilixContainer> => {
+  const container: AwilixContainer = createContainer({
+    injectionMode: InjectionMode.CLASSIC,
+  });
 
-const globPatterns: Array<string | GlobWithOptions> = [
-  'web/http/**/controller.js',
-  'domain/usecase/**/service.js',
-  'data/**/repository.js',
-];
+  container.loadModules(['./web/grpc/*Controller.ts', './domain/usecase/**/*.ts', './data/**/*Repository.ts'], {
+    formatName: 'camelCase',
+    cwd: path.resolve(__dirname),
+    resolverOptions: {
+      lifetime: Lifetime.SINGLETON,
+      register: asClass,
+    },
+  });
 
-container.loadModules(globPatterns, {
-  formatName: 'camelCase',
-  cwd: path.resolve(__dirname),
-  resolverOptions: {
-    lifetime: Lifetime.SINGLETON,
-    register: asClass,
-  },
-});
+  // repository
+  container.register({
+    typeOrmUserRepository: asValue(dbConnection.getCustomRepository(TypeOrmUserRepository)),
+  });
 
-export default container;
+  // eslint-disable-next-line no-console
+  console.log(container);
+
+  return container;
+};

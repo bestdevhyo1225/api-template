@@ -1,34 +1,25 @@
 {
-  "presets": [
-    [
-      "@babel/env",
-      {
-        "targets": {
-          "node": "current"
-        }
-      }
-    ],
-    "@babel/typescript"
-  ],
+  "presets": [["@babel/env", { "targets": { "node": "current" } }], "@babel/preset-typescript"],
   "plugins": [
-    "@babel/proposal-class-properties",
-    "@babel/proposal-object-rest-spread",
-    "@babel/proposal-optional-chaining",
-    "@babel/transform-destructuring",
-    "@babel/transform-runtime",
-    "@babel/transform-async-to-generator",
     [
       "module-resolver",
       {
+        "extensions": [".ts"],
         "root": ["."],
         "alias": {
-          "common": "./src/common",
-          "data": "./src/data",
-          "domain": "./src/domain",
-          "infrastructure": "./src/infrastructure",
-          "web": "./src/web"
+          "@common": "./src/common",
+          "@domain": "./src/domain",
+          "@data": "./src/data",
+          "@web": "./src/web",
+          "@infrastructure": "./src/infrastructure"
         }
       }
-    ]
-  ]
+    ],
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose": true }],
+    "@babel/plugin-transform-destructuring",
+    "babel-plugin-transform-typescript-metadata"
+  ],
+  "comments": false,
+  "ignore": ["./src/__tests__"]
 }
