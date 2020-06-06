@@ -34,7 +34,7 @@ jobs:
           cache-name: cache-node-module
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOSpath: ~/.npm
-          key: ${{ runner.os }}-build-${{ evn.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
