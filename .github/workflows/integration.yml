@@ -46,8 +46,8 @@ jobs:
 
       - name: NPM Lint & Type-Check
         run: |
-        npm run lint
-        npm run type-check
+          npm run lint
+          npm run type-check
 
       - name: NPM Test
         run: |
