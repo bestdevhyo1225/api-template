@@ -1,8 +1,7 @@
-import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index, Unique } from 'typeorm';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index } from 'typeorm';
 import bcrypt from 'bcrypt-nodejs';
 
 @Entity('user')
-@Unique(['username', 'email'])
 @Index(['username', 'email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
