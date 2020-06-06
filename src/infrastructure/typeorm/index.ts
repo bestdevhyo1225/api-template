@@ -1,9 +1,9 @@
-import { Connection, createConnection } from 'typeorm';
 import config from '@common/config';
+import { Connection, createConnection } from 'typeorm';
 
 export const initDB = async (): Promise<Connection> => {
   const { syncForce, db } = config;
-  const { database, uri } = db;
+  const { database, uri, entities } = db;
 
   return createConnection({
     type: 'mysql',
@@ -13,6 +13,6 @@ export const initDB = async (): Promise<Connection> => {
     extra: {
       charset: 'utf8mb4_general_ci',
     },
-    entities: ['src/domain/entity/*.ts'],
+    entities: [entities],
   });
 };

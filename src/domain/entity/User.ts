@@ -1,20 +1,19 @@
 import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index } from 'typeorm';
 import bcrypt from 'bcrypt-nodejs';
 
-@Entity()
+@Entity('user')
+@Index(['username', 'email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id!: bigint;
 
-  @Index({ unique: true })
-  @Column()
+  @Column('varchar')
   username!: string;
 
-  @Index({ unique: true })
-  @Column()
+  @Column('varchar')
   email!: string;
 
-  @Column()
+  @Column('varchar')
   password!: string;
 
   @BeforeInsert()
