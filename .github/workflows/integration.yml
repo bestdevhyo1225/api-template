@@ -43,7 +43,6 @@ jobs:
 
       - name: NPM Install
         run: |
-          cp .env.sample ./.env
           npm install
 
       - name: NPM Lint & Type-Check
@@ -53,6 +52,7 @@ jobs:
 
       - name: NPM Test
         run: |
+          cp .env.sample ./.env
           npm test
         env:
           DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
