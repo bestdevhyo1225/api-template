@@ -24,7 +24,7 @@ Run the `npm install` command
 $ npm install
 ```
 
-Copy the `.env.sample` file to ./.env
+Copy the `.env.sample` file to `./.env`
 
 ```zsh
 $ cp .env.sample ./.env
@@ -35,7 +35,7 @@ $ cp .env.sample ./.env
 Build the docker image
 
 ```zsh
-$ docker build -t event-promotion-api:latest --build-arg REPO_ACCESS_TOKEN=${PersonalAccessTokens} .
+$ docker build -t user-api:latest .
 ```
 
 Run the docker container
