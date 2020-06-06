@@ -27,6 +27,7 @@ const index: ConfigIndex = {
     syncForce: process.env.SYNC_FORCE || false,
     jwtSecret: process.env.JWT_SECRET || undefined,
     db: {
+      entities: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
       options: {
         type: 'mysql',
         timezone: '+09:00',
