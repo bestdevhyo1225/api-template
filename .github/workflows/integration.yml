@@ -24,17 +24,17 @@ jobs:
           chmod 777 ./waitdb.sh
           ./waitdb.sh
 
-      - name: Setup Node.js 11.x
+      - name: Setup Node.js 12.x
         uses: actions/setup-node@v1
         with:
-          node-version: '11.x'
+          node-version: '12.x'
 
       - name: Cache Node Modules
         uses: actions/cache@v2
         env:
           cache-name: cache-node-module
         with:
-          # npm cache files are stored in `~/.npm` on Linux/macOSpath: ~/.npm
+          path: ~/.npm
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
