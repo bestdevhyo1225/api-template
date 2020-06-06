@@ -41,10 +41,6 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Copy Env Sample File
-        run: |
-          cp .env.sample ./.env
-
       - name: NPM Install
         run: |
           npm install
@@ -56,6 +52,7 @@ jobs:
 
       - name: NPM Test
         run: |
+          cp .env.sample ./.env
           npm test
         env:
           DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
