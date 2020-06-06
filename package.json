@@ -83,7 +83,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@seoulstore/mali-logger": "^0.1.1",
     "awilix": "^4.2.5",
     "awilix-express": "^3.0.0",
     "awilix-koa": "^4.0.0",
@@ -99,6 +98,7 @@
     "koa-router": "^8.0.8",
     "lodash": "^4.17.15",
     "mali": "^0.20.0",
+    "mali-logger": "^0.2.2",
     "merge": "^1.2.1",
     "mysql2": "^2.1.0",
     "typeorm": "^0.2.25"

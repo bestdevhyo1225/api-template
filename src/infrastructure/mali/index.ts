@@ -1,5 +1,5 @@
 import glob from 'glob';
-import logger from '@seoulstore/mali-logger';
+import logger from 'mali-logger';
 import Mali, { Context } from 'mali';
 import { AwilixContainer } from 'awilix';
 import { ConfigAll } from '@common/types/config/all';
