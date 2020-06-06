@@ -1,3 +1,4 @@
+import path from 'path';
 import { Connection, createConnection } from 'typeorm';
 import config from '@common/config';
 
@@ -13,6 +14,6 @@ export const initDB = async (): Promise<Connection> => {
     extra: {
       charset: 'utf8mb4_general_ci',
     },
-    entities: ['src/domain/entity/*.ts'],
+    entities: [path.resolve(__dirname, '../../domain/entity/*.{js,ts}')],
   });
 };
