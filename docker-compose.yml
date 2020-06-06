@@ -1,0 +1,41 @@
+version: '3'
+services:
+  user-api:
+    image: user-api:latest
+    container_name: user-api
+    command: >
+      sh -c 
+      "npm rebuild && 
+      npm run lint && 
+      npm run type-check && 
+      npm run start"
+    volumes:
+      - ./idl:/home/node/api/idl
+      - ./dist:/home/node/api/dist
+      - ./src:/home/node/api/src
+      - ./package.json:/home/node/api/package.json
+      - ./.env:/home/node/api/.env
+      - ./.env.sample:/home/node/api/.env.sample
+      - ./.babelrc:/home/node/api/.babelrc
+      - ./.eslintrc:/home/node/api/.eslintrc
+    ports:
+      - '9000:9000'
+    environment:
+      NODE_ENV: development
+      PORT: 9000
+      TZ: Asia/Seoul
+    tty: true
+    links:
+      - user-api-mysql
+
+  user-api-mysql:
+    image: mysql:8
+    container_name: user-api-mysql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=''
+    restart: always
+    ports:
+      - '9001:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: api_dev
+      TZ: Asia/Seoul

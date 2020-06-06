@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package user;
+
+service UserService {
+  rpc FindUsers (FindUsersRequest) returns (FindUsersResponse);
+}
+
+message FindUsersRequest {
+  int32 userId = 1;
+  int32 start = 2;
+  int32 count = 3;
+}
+
+message FindUsersResponse {
+  repeated User items = 1;
+  int32 start = 2;
+  int32 count = 3;
+  int32 total = 4;
+}
+
+message User {
+  string username = 1;
+  string email = 2;
+}
