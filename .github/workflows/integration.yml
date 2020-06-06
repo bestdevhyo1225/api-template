@@ -19,7 +19,7 @@ jobs:
         run: |
           docker run --name mysql -e "MYSQL_ROOT_PASSWORD=example" -e "MYSQL_DATABASE=api_dev" -p 9001:3306 -d mysql:8 --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=''
 
-      - name: Wait Database Init
+      - name: Wait for DB initialize
         run: |
           chmod 777 ./waitdb.sh
           ./waitdb.sh
