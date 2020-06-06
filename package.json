@@ -1,5 +1,5 @@
 {
-  "name": "typescript-api-server",
+  "name": "boilerplate-api",
   "version": "1.0.0",
   "description": "Simple API Server",
   "main": "src/index.ts or dist/index.js",

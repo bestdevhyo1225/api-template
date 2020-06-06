@@ -114,3 +114,6 @@ docker-compose.local.yml
 
 # rest
 rest
+
+# *-lock.json
+*-lock.json
