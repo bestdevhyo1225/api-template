@@ -1,7 +1,7 @@
 import { UserRepository } from '@domain/entity/UserRepository';
 import { User } from '@domain/entity/User';
 
-export default class GetEventPromotion {
+export default class GetUser {
   private readonly userRepository: UserRepository;
 
   constructor(typeOrmUserRepository: UserRepository) {
