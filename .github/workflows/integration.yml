@@ -56,3 +56,4 @@ jobs:
           npm test
         env:
           DB_TEST_URI: ${{ secrets.DB_TEST_URI }}
+          DB_REPLICATION: ${{ secrets.DB_REPLICATION }}

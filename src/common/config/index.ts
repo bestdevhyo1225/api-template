@@ -8,8 +8,6 @@ const requireProcessEnv = (name: string): string => {
     throw new Error(`You must set the ${name} environment variable`);
   }
 
-  console.log(process.env.NODE_ENV);
-
   return process.env[name] as string;
 };
 
