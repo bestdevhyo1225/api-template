@@ -1,4 +1,4 @@
-name: TypeScript API Template CI
+name: Boilerplate API
 
 on:
   pull_request:
@@ -21,12 +21,13 @@ jobs:
 
       - name: Wait Database Init
         run: |
+          chmod 777 ./waitdb.sh
           ./waitdb.sh
 
-      - name: Setup Node.js 10.x
+      - name: Setup Node.js 11.x
         uses: actions/setup-node@v1
         with:
-          node-version: '10.x'
+          node-version: '11.x'
 
       - name: Cache Node Modules
         uses: actions/cache@v2
