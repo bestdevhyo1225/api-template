@@ -114,6 +114,3 @@ docker-compose.local.yml
 
 # rest
 rest
-
-# package-lock.json
-package-lock.json
