@@ -1,20 +1,89 @@
-# Practice Repo..
+# Boilerplate API
 
 <br>
 
-## Done
+## Main modules
 
-- [x] Typscript 적용
-- [x] Prettier & ESlint 적용
-- [x] awilix & awlix-koa 사용해서 간단하게 서버 실행
-- [x] Github Actions를 사용해서 CI 적용
+- [awilix](https://github.com/jeffijoe/awilix)
+- [mali](https://github.com/malijs/mali)
+- [typeorm](https://github.com/typeorm/typeorm)
 
-## Todo
+<br>
 
-- [ ] Sequelize 적용
-- [ ] 테스트 코드 환경 세팅 및 적용
-- [ ] Docker 환경 구성 (DockerFile & docker-compose)
-- [ ] Github Actions CI에 docker 및 테스트 코드를 실행하는 스크립트 추가하기
-- [ ] Github Actions를 사용해서 CD 적용
-- [ ] CD -> AWS ECR, ECS Fargate (복습)
-- [ ] VPC 및 네트워크 공부할 것
+## Playing locally
+
+- NodeJS >= 12.x.x
+- Docker Image
+- .env file
+
+### Ready
+
+Run the `npm install` command
+
+```zsh
+$ npm install
+```
+
+Copy the `.env.sample` file to `./.env`
+
+```zsh
+$ cp .env.sample ./.env
+```
+
+### Running with docker
+
+Build the docker image
+
+```zsh
+$ docker build -t user-api:latest .
+```
+
+Run the docker container
+
+```zsh
+$ docker-compose up -f docker-compose.yml
+```
+
+### Running with Local
+
+Run the command as below
+
+```zsh
+# lint
+$ npm run lint
+
+# type check
+$ npm run type-check
+
+# start
+$ npm start
+```
+
+<br>
+
+## Project structure
+
+```
+src
+├── common
+│   ├── config
+│   ├── types
+│   └── utils
+├── data
+├── domain
+│   ├── entity
+│   └── usecase
+├── infrastructure
+│   ├── grpc-caller
+│   ├── mali
+│   └── typeorm
+└── web
+│   ├── grpc
+│   └── request
+test
+├── integration
+│   └── grpc
+└── unit
+    ├── data
+    └── domain
+```
