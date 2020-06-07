@@ -11,7 +11,7 @@ export default (container: AwilixContainer): void => {
 
   let app: Mali = new Mali();
 
-  glob.sync('idl/*.proto').forEach(file => app.addService(file, ''));
+  glob.sync('idl/*.proto').forEach((file: string) => app.addService(file, ''));
 
   app.use(logger());
 
