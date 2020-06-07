@@ -38,20 +38,20 @@ const index: ConfigIndex = {
   test: {
     syncForce: true,
     db: {
-      database: 'api_dev',
+      database: 'test',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   development: {
     syncForce: true,
     db: {
-      database: 'api_dev',
+      database: 'dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   production: {
     db: {
-      database: 'seoulstore',
+      database: 'production',
       options: {
         replication: requireProcessEnv('DB_REPLICATION'),
       },
