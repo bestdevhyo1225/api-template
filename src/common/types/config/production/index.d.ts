@@ -1,8 +1,11 @@
+import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
+
 export interface ConfigProduction {
   readonly db?: {
     readonly database?: string;
-    readonly options?: {
-      readonly replication?: string;
+    readonly replication?: {
+      readonly master: MysqlConnectionCredentialsOptions;
+      readonly slaves: MysqlConnectionCredentialsOptions[];
     };
   };
 }

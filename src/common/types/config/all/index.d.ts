@@ -1,12 +1,13 @@
+import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { DatabaseType } from 'typeorm';
+
 export interface DatabaseInfo {
   readonly database?: string;
   readonly uri?: string;
-  readonly entities?: string;
-  readonly options?: {
-    readonly type: string;
-    readonly timezone: string;
-    readonly logging: boolean | null;
-  };
+  readonly type: DatabaseType;
+  readonly timezone: string;
+  readonly entitiesPath: string;
+  readonly logging: LoggerOptions;
 }
 
 export interface ConfigAll {
