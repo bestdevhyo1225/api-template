@@ -8,7 +8,7 @@ const requireProcessEnv = (name: string): string => {
     throw new Error(`You must set the ${name} environment variable`);
   }
 
-  return process.env[name] as string;
+  return process.env[name] || '';
 };
 
 if (process.env.NODE_ENV !== 'production') {
@@ -27,34 +27,30 @@ const index: ConfigIndex = {
     syncForce: process.env.SYNC_FORCE || false,
     jwtSecret: process.env.JWT_SECRET || undefined,
     db: {
-      entities: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
-      options: {
-        type: 'mysql',
-        timezone: '+09:00',
-        logging: null,
-      },
+      type: 'mysql',
+      timezone: '+09:00',
+      entitiesPath: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
+      logging: false,
     },
+    tempApiGrpcServer: process.env.tempApiGrpcServer || 'localhost:9100',
   },
   test: {
     syncForce: true,
     db: {
-      database: 'test',
+      database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   development: {
     syncForce: true,
     db: {
-      database: 'dev',
+      database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   production: {
     db: {
-      database: 'production',
-      options: {
-        replication: requireProcessEnv('DB_REPLICATION'),
-      },
+      replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
     },
   },
 };

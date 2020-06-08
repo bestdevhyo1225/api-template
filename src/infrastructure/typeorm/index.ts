@@ -3,16 +3,16 @@ import { Connection, createConnection } from 'typeorm';
 
 export const initDB = async (): Promise<Connection> => {
   const { syncForce, db } = config;
-  const { database, uri, entities } = db;
+  const { type, timezone, entitiesPath, database, uri, replication } = db;
 
   return createConnection({
-    type: 'mysql',
+    type,
+    timezone,
     database,
     url: uri,
     synchronize: syncForce,
-    extra: {
-      charset: 'utf8mb4_general_ci',
-    },
-    entities: [entities],
+    extra: { charset: 'utf8mb4_general_ci' },
+    entities: [entitiesPath],
+    replication: replication ? { ...replication } : null,
   });
 };

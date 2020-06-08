@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package temp;
+
+service TempService { rpc Find(FindRequest) returns (FindResponse); }
+
+message FindRequest { int32 requestId = 1; }
+
+message FindResponse { string responseMessage = 1; }
