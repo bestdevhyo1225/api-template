@@ -32,18 +32,19 @@ const index: ConfigIndex = {
       entitiesPath: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
       logging: false,
     },
+    tempApiGrpcServer: process.env.tempApiGrpcServer || 'localhost:9100',
   },
   test: {
     syncForce: true,
     db: {
-      database: 'test',
+      database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },
   development: {
     syncForce: true,
     db: {
-      database: 'dev',
+      database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
   },

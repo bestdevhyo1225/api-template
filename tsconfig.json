@@ -4,7 +4,7 @@
     "module": "commonjs",
     "outDir": "dist",
     "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
