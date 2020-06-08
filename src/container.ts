@@ -9,7 +9,12 @@ export const initContainer = async (dbConnection: Connection): Promise<AwilixCon
   });
 
   container.loadModules(
-    ['./web/grpc/*Controller.{js,ts}', './domain/usecase/**/*.{js,ts}', './data/**/*Repository.{js,ts}'],
+    [
+      './web/grpc/*Controller.{js,ts}',
+      './domain/usecase/**/*.{js,ts}',
+      './data/**/*Repository.{js,ts}',
+      './infrastructure/grpc-caller/*Caller.{js,ts}',
+    ],
     {
       formatName: 'camelCase',
       cwd: path.resolve(__dirname),

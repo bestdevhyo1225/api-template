@@ -1,5 +1,6 @@
 import { Context } from 'mali';
 import GetUser from '@domain/usecase/user/GetUser';
+import { User } from '@domain/entity/User';
 
 export default class UserController {
   private readonly getUser: GetUser;
@@ -9,7 +10,8 @@ export default class UserController {
   }
 
   public list = async (ctx: Context): Promise<Context> => {
-    ctx.res = await this.getUser.findAll();
+    const users: User[] = await this.getUser.findAll();
+    ctx.res = { items: users };
     return ctx;
   };
 }
