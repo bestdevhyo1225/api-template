@@ -5,8 +5,7 @@ services:
     container_name: user-api
     command: >
       sh -c 
-      "npm rebuild && 
-      npm run lint && 
+      "npm run lint && 
       npm run type-check && 
       npm run start"
     volumes:
