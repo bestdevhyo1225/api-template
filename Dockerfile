@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:erbium-alpine
 
 ARG REPO_ACCESS_TOKEN
 ENV HOME=/home/node
@@ -8,9 +8,6 @@ WORKDIR $APP_DIR
 # --no-cache: download package index on-the-fly, no need to cleanup afterwards
 # --virtual: bundle packages, remove whole bundle at once, when done
 RUN apk --no-cache --virtual build-dependencies add \
-  python \
-  make \
-  g++ \
   tzdata \
   && cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
   && echo "Asia/Seoul" > /etc/timezone \
