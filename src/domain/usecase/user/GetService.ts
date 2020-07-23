@@ -1,14 +1,22 @@
+import { Commands } from 'ioredis';
 import { Connection } from 'typeorm';
+
 import { User } from '@domain/entity/User';
 
 import TypeOrmUserRepository from '@data/user/TypeOrmUserRepository';
 
 export default class GetService {
   private readonly typeOrmConnection: Connection;
+  private readonly ioRedisConnection: Commands;
   private readonly userRepository: TypeOrmUserRepository;
 
-  constructor(typeOrmConnection: Connection, typeOrmUserRepository: TypeOrmUserRepository) {
+  constructor(
+    typeOrmConnection: Connection,
+    ioRedisConnection: Commands,
+    typeOrmUserRepository: TypeOrmUserRepository,
+  ) {
     this.typeOrmConnection = typeOrmConnection;
+    this.ioRedisConnection = ioRedisConnection;
     this.userRepository = typeOrmUserRepository;
   }
 
@@ -18,6 +26,10 @@ export default class GetService {
 
   public async findUser(userId: bigint): Promise<User | undefined> {
     return this.userRepository.findOneById(userId);
+  }
+
+  public async findUserByRedis(userId: bigint): Promise<string | null> {
+    return this.ioRedisConnection.get(userId.toString());
   }
 
   public async login(user: User): Promise<boolean> {

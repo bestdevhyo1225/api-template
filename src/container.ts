@@ -1,9 +1,10 @@
 import path from 'path';
+import { Commands } from 'ioredis';
 import { Connection } from 'typeorm';
 import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asFunction } from 'awilix';
 import TypeOrmUserRepository from '@data/user/TypeOrmUserRepository';
 
-export const initContainer = async (dbConnection: Connection): Promise<AwilixContainer> => {
+export const initContainer = async (dbConnection: Connection, redisConnection: Commands): Promise<AwilixContainer> => {
   const container: AwilixContainer = createContainer({
     injectionMode: InjectionMode.CLASSIC,
   });
@@ -23,6 +24,11 @@ export const initContainer = async (dbConnection: Connection): Promise<AwilixCon
   // TypeOrm Connection Injection
   container.register({
     typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+  });
+
+  // Redis Connection Injection
+  container.register({
+    ioRedisConnection: asFunction(() => redisConnection, { lifetime: Lifetime.TRANSIENT }),
   });
 
   // Custom Repository
