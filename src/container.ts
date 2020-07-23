@@ -1,6 +1,6 @@
 import path from 'path';
 import { Connection } from 'typeorm';
-import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asValue } from 'awilix';
+import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asFunction } from 'awilix';
 import TypeOrmUserRepository from '@data/user/TypeOrmUserRepository';
 
 export const initContainer = async (dbConnection: Connection): Promise<AwilixContainer> => {
@@ -9,12 +9,7 @@ export const initContainer = async (dbConnection: Connection): Promise<AwilixCon
   });
 
   container.loadModules(
-    [
-      './web/grpc/*Controller.{js,ts}',
-      './domain/usecase/**/*.{js,ts}',
-      './data/**/*Repository.{js,ts}',
-      './infrastructure/grpc-caller/*Caller.{js,ts}',
-    ],
+    ['./web/http/**/*Controller.{js,ts}', './domain/usecase/**/*.{js,ts}', './data/**/*Repository.{js,ts}'],
     {
       formatName: 'camelCase',
       cwd: path.resolve(__dirname),
@@ -25,9 +20,16 @@ export const initContainer = async (dbConnection: Connection): Promise<AwilixCon
     },
   );
 
-  // repository
+  // TypeOrm Connection Injection
   container.register({
-    typeOrmUserRepository: asValue(dbConnection.getCustomRepository(TypeOrmUserRepository)),
+    typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+  });
+
+  // Custom Repository
+  container.register({
+    typeOrmUserRepository: asFunction(() => dbConnection.getCustomRepository(TypeOrmUserRepository), {
+      lifetime: Lifetime.TRANSIENT,
+    }),
   });
 
   // eslint-disable-next-line no-console
