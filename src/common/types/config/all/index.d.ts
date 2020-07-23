@@ -1,6 +1,7 @@
 import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { DatabaseType } from 'typeorm';
+import { RedisOptions } from 'ioredis';
 
 export interface ConfigAll {
   readonly env: string | number;
@@ -20,5 +21,6 @@ export interface ConfigAll {
       readonly slaves: MysqlConnectionCredentialsOptions[];
     };
   };
+  readonly redis: RedisOptions;
   readonly tempApiGrpcServer: string;
 }
