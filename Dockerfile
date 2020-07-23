@@ -22,4 +22,4 @@ COPY ./ $APP_DIR/
 RUN npm i
 
 EXPOSE 9000
-CMD ["npm", "run", "prod"]
+CMD ["sh", "-c", "npm run build && npm run prod"]

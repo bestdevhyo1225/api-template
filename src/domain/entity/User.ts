@@ -1,20 +1,21 @@
-import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index } from 'typeorm';
-import bcrypt from 'bcrypt-nodejs';
+import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index, Unique } from 'typeorm';
+import bcrypt from 'bcrypt';
 
 @Entity('user')
+@Unique(['email'])
 @Index(['username', 'email'])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: bigint;
 
   @Column('varchar')
-  username!: string;
-
-  @Column('varchar')
   email!: string;
 
   @Column('varchar')
   password!: string;
+
+  @Column('varchar')
+  username!: string;
 
   @BeforeInsert()
   @BeforeUpdate()
@@ -25,5 +26,9 @@ export class User extends BaseEntity {
   async cryptPassword(password: string): Promise<string> {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, salt);
+  }
+
+  async checkLoginProcess(user: User): Promise<boolean> {
+    return bcrypt.compare(user.password, this.password);
   }
 }

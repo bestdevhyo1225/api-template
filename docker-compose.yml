@@ -1,12 +1,12 @@
 version: '3'
 services:
-  user-api:
-    image: user-api:latest
-    container_name: user-api
+  my-boilerplate-api:
+    image: my-boilerplate-api:latest
+    container_name: my-boilerplate-api
     command: >
-      sh -c 
-      "npm run lint && 
-      npm run type-check && 
+      sh -c
+      "npm run lint &&
+      npm run type-check &&
       npm run start"
     volumes:
       - ./idl:/home/node/api/idl
@@ -25,11 +25,11 @@ services:
       TZ: Asia/Seoul
     tty: true
     links:
-      - user-api-mysql
+      - my-boilerplate-api-mysql
 
-  user-api-mysql:
+  my-boilerplate-api-mysql:
     image: mysql:8
-    container_name: user-api-mysql
+    container_name: my-boilerplate-api-mysql
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql-mode=''
     restart: always
     ports:

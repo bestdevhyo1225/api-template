@@ -7,4 +7,16 @@ export default class TypeOrmUserRepository extends Repository<User> implements U
   public async findAll(): Promise<User[]> {
     return this.find();
   }
+
+  public async findOneById(userId: bigint): Promise<User | undefined> {
+    return this.findOne(userId.toString());
+  }
+
+  public async findOneByEmail(email: string): Promise<User | undefined> {
+    return this.findOne({ email });
+  }
+
+  public async createOrUpdateOf(user: User): Promise<User> {
+    return this.save(user);
+  }
 }
