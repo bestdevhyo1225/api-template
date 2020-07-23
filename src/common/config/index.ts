@@ -54,7 +54,12 @@ const index: ConfigIndex = {
       uri: requireProcessEnv('DB_TEST_URI'),
     },
     redis: {
-      host: requireProcessEnv('REDIS_TEST_URI'),
+      host: 'redis://:password1234@localhost:6379',
+      password: 'password1234',
+      preferredSlaves: [
+        { ip: '127.0.0.1', port: '6380', prio: 1 },
+        { ip: '127.0.0.1', port: '6381', prio: 2 },
+      ],
     },
   },
   production: {

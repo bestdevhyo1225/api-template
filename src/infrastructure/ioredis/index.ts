@@ -3,11 +3,9 @@ import config from '@common/config';
 
 export const initRedis = async (): Promise<Commands> => {
   const { env, redis } = config;
+  const { host, password, preferredSlaves } = redis;
 
-  if (env === 'test' || env === 'development') {
-    const { host } = redis;
-    return new Redis(host);
-  }
+  if (env === 'test') return new Redis(host);
 
-  return new Redis({ ...redis });
+  return new Redis(host, { password, preferredSlaves });
 };
