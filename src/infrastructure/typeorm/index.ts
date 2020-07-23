@@ -1,5 +1,6 @@
-import config from '@common/config';
 import { Connection, createConnection } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import config from '@common/config';
 
 export const initDB = async (): Promise<Connection> => {
   const { syncForce, db } = config;
@@ -14,5 +15,7 @@ export const initDB = async (): Promise<Connection> => {
     extra: { charset: 'utf8mb4_general_ci' },
     entities: [entitiesPath],
     replication: replication ? { ...replication } : null,
+    namingStrategy: new SnakeNamingStrategy(),
+    logging: true,
   });
 };
