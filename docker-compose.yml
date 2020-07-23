@@ -43,7 +43,11 @@ services:
   my-boilerplate-api-redis:
     image: redis:5.0-alpine
     container_name: my-boilerplate-api-redis
-    command: redis-server
+    command: >
+      sh -c
+      redis-server ./redis.conf
     restart: always
     ports:
       - '9002:6379'
+    volumes:
+      - ./redis.conf:/data/redis.conf
