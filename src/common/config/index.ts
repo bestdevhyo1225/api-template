@@ -32,6 +32,9 @@ const index: ConfigIndex = {
       entitiesPath: path.join(__dirname, '../../domain/entity/*.{js,ts}'),
       logging: false,
     },
+    redis: {
+      role: 'master',
+    },
     tempApiGrpcServer: process.env.tempApiGrpcServer || 'localhost:9100',
   },
   test: {
@@ -40,6 +43,9 @@ const index: ConfigIndex = {
       database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
+    redis: {
+      host: requireProcessEnv('REDIS_TEST_URI'),
+    },
   },
   development: {
     syncForce: true,
@@ -47,11 +53,15 @@ const index: ConfigIndex = {
       database: 'api_dev',
       uri: requireProcessEnv('DB_TEST_URI'),
     },
+    redis: {
+      host: requireProcessEnv('REDIS_TEST_URI'),
+    },
   },
   production: {
     db: {
       replication: JSON.parse(requireProcessEnv('DB_REPLICATION')),
     },
+    redis: {},
   },
 };
 

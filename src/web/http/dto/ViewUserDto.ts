@@ -22,6 +22,10 @@ export default class ViewUserDto {
     return this;
   }
 
+  public getId(): bigint {
+    return this.id;
+  }
+
   public static of(user: User): ViewUserDto {
     return new ViewUserDto().setId(user.id).setEmail(user.email).setUsername(user.username);
   }

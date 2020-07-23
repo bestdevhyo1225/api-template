@@ -1,4 +1,5 @@
 import { MysqlConnectionCredentialsOptions } from 'typeorm/driver/mysql/MysqlConnectionCredentialsOptions';
+import { RedisOptions } from 'ioredis';
 
 export interface ConfigDevelopment {
   readonly syncForce?: boolean;
@@ -10,4 +11,5 @@ export interface ConfigDevelopment {
       readonly slaves: MysqlConnectionCredentialsOptions[];
     };
   };
+  readonly redis?: RedisOptions;
 }

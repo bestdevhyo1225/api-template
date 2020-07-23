@@ -36,7 +36,13 @@ export default class UserController {
   public async findUser(ctx: Context): Promise<Context> {
     const { id } = ctx.params;
 
-    const findUser: User = (await this.getService.findUser(id)) as User;
+    const strFindUser: string | null = await this.getService.findUserByRedis(id);
+
+    if (strFindUser && strFindUser.length > 0) {
+      return ctx.success({ ...JSON.parse(strFindUser) });
+    }
+
+    const findUser: User | undefined = await this.getService.findUser(id);
 
     if (!findUser) {
       ctx.status = 404;
@@ -44,6 +50,8 @@ export default class UserController {
     }
 
     const user: ViewUserDto = ViewUserDto.of(findUser);
+
+    await this.commandService.createUserOfRedis(user);
 
     return ctx.success({ ...user });
   }
