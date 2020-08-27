@@ -1,18 +1,18 @@
-import { Commands } from 'ioredis';
+// import { Commands } from 'ioredis';
 import { Connection } from 'typeorm';
 import { AwilixContainer } from 'awilix';
 
 import { initContainer } from './container';
 import { initDB } from '@infrastructure/typeorm';
-import { initRedis } from '@infrastructure/ioredis';
+// import { initRedis } from '@infrastructure/ioredis';
 import initKoa from '@infrastructure/koa';
 
 const startDatabase = async (): Promise<AwilixContainer> => {
   try {
     const dbConnection: Connection = await initDB();
-    const redisConnection: Commands = await initRedis();
+    // const redisConnection: Commands = await initRedis();
 
-    return initContainer(dbConnection, redisConnection);
+    return initContainer(dbConnection);
   } catch (error) {
     return error;
   }

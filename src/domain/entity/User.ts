@@ -1,11 +1,22 @@
-import { Column, Entity, BaseEntity, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, Index, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  BaseEntity,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  BeforeUpdate,
+  Index,
+  Unique,
+  OneToMany,
+} from 'typeorm';
 import bcrypt from 'bcrypt';
+import { Project } from '@domain/entity/Project';
 
 @Entity('user')
 @Unique(['email'])
 @Index(['username', 'email'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment', { name: 'user_id', type: 'bigint' })
   id!: bigint;
 
   @Column('varchar')
@@ -16,6 +27,9 @@ export class User extends BaseEntity {
 
   @Column('varchar')
   username!: string;
+
+  @OneToMany(() => Project, (project: Project) => project.user, { cascade: true })
+  projects!: Array<Project>;
 
   @BeforeInsert()
   @BeforeUpdate()
