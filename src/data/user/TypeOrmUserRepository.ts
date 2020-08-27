@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityRepository, Repository, UpdateResult } from 'typeorm';
 import { UserRepository } from '@domain/entity/UserRepository';
 import { User } from '@domain/entity/User';
 
@@ -8,7 +8,7 @@ export default class TypeOrmUserRepository extends Repository<User> implements U
     return this.find();
   }
 
-  public async findOneById(userId: bigint): Promise<User | undefined> {
+  public async findOneById(userId: number): Promise<User | undefined> {
     return this.findOne(userId.toString());
   }
 
@@ -16,7 +16,11 @@ export default class TypeOrmUserRepository extends Repository<User> implements U
     return this.findOne({ email });
   }
 
-  public async createOrUpdate(user: User): Promise<User> {
+  public async createOne(user: User): Promise<User> {
     return this.save(user);
+  }
+
+  public async updateOne(userId: number, user: Partial<User>): Promise<UpdateResult> {
+    return this.update(userId, user);
   }
 }

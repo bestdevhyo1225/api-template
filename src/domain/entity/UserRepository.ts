@@ -1,8 +1,10 @@
 import { User } from '@domain/entity/User';
+import { UpdateResult } from 'typeorm';
 
 export interface UserRepository {
   findAll(): Promise<User[]>;
-  findOneById(userId: bigint): Promise<User | undefined>;
+  findOneById(userId: number): Promise<User | undefined>;
   findOneByEmail(email: string): Promise<User | undefined>;
-  createOrUpdate(user: User): Promise<User>;
+  createOne(user: User): Promise<User>;
+  updateOne(userId: number, user: Partial<User>): Promise<UpdateResult>;
 }

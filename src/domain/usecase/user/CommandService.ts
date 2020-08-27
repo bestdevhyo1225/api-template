@@ -1,7 +1,6 @@
-import { Connection } from 'typeorm';
+import { Connection, UpdateResult } from 'typeorm';
 
 import TypeOrmUserRepository from '@data/user/TypeOrmUserRepository';
-import TypeOrmUserTransactionRepository from '@data/user/TypeOrmUserTransactionRepository';
 
 import { User } from '@domain/entity/User';
 import { Project } from '@domain/entity/Project';
@@ -12,18 +11,15 @@ export default class CommandService {
   private readonly typeOrmConnection: Connection;
   // private readonly ioRedisConnection: Commands;
   private readonly userRepository: TypeOrmUserRepository;
-  private readonly userTransactionRepository: TypeOrmUserTransactionRepository;
 
   constructor(
     typeOrmConnection: Connection,
     // ioRedisConnection: Commands,
     typeOrmUserRepository: TypeOrmUserRepository,
-    typeOrmUserTransactionRepository: TypeOrmUserTransactionRepository,
   ) {
     this.typeOrmConnection = typeOrmConnection;
     // this.ioRedisConnection = ioRedisConnection;
     this.userRepository = typeOrmUserRepository;
-    this.userTransactionRepository = typeOrmUserTransactionRepository;
   }
 
   public async createUser(createUserDto: CreateUserDto): Promise<number> {
@@ -31,20 +27,19 @@ export default class CommandService {
 
     const user: User = User.createUser(createUserDto, projects);
 
-    const { id }: Partial<User> = await this.userRepository.createOrUpdate(user);
+    const { id }: User = await this.userRepository.createOne(user);
 
     return id;
   }
 
-  public async updateUser(updateUserDto: UpdateUserDto): Promise<User> {
+  public async updateUser(updateUserDto: UpdateUserDto): Promise<boolean> {
     const user: User = new User();
 
-    user.id = updateUserDto.getId();
-    user.email = updateUserDto.getEmail();
-    user.password = updateUserDto.getPassword();
-    user.username = updateUserDto.getUsername();
+    user.changeUser(updateUserDto);
 
-    return this.userRepository.createOrUpdate(user);
+    const { raw }: UpdateResult = await this.userRepository.updateOne(user.id, user);
+
+    return !!raw.changedRows;
   }
 
   // public async createUserOfRedis(user: ViewUserDto): Promise<Ok | null> {

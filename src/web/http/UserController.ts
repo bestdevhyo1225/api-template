@@ -101,11 +101,9 @@ export default class UserController {
     const { updateUserDto } = ctx.request.body;
 
     try {
-      const updateUser: User = await this.commandService.updateUser(updateUserDto);
+      const isUpdated: boolean = await this.commandService.updateUser(updateUserDto);
 
-      const user: ViewUserDetailDto = await ViewUserDetailDto.of(updateUser);
-
-      return ctx.success({ user });
+      return ctx.success({ isUpdated });
     } catch (error) {
       ctx.status = 500;
       return ctx.error('Internal Server Error');

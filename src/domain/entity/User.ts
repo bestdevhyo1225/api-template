@@ -12,6 +12,7 @@ import {
 import bcrypt from 'bcrypt';
 import { Project } from '@domain/entity/Project';
 import CreateUserDto from '@web/http/dto/CreateUserDto';
+import UpdateUserDto from '@web/http/dto/UpdateUserDto';
 
 @Entity('user')
 @Unique(['email'])
@@ -35,16 +36,16 @@ export class User extends BaseEntity {
 
   @BeforeInsert()
   @BeforeUpdate()
-  async hashPwd() {
+  private async hashPwd() {
     this.password = await this.cryptPassword(this.password);
   }
 
-  async cryptPassword(password: string): Promise<string> {
+  public async cryptPassword(password: string): Promise<string> {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, salt);
   }
 
-  async checkLoginProcess(user: User): Promise<boolean> {
+  public async checkLoginProcess(user: User): Promise<boolean> {
     return bcrypt.compare(user.password, this.password);
   }
 
@@ -58,5 +59,12 @@ export class User extends BaseEntity {
     user.projects = Promise.resolve(projects);
 
     return user;
+  }
+
+  public changeUser(updateUserDto: UpdateUserDto): void {
+    this.id = updateUserDto.getId();
+    this.email = updateUserDto.getEmail();
+    this.password = updateUserDto.getPassword();
+    this.username = updateUserDto.getUsername();
   }
 }

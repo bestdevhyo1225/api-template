@@ -23,7 +23,7 @@ export default class GetService {
     return this.userRepository.findAll();
   }
 
-  public async findUser(userId: bigint): Promise<User | undefined> {
+  public async findUser(userId: number): Promise<User | undefined> {
     return this.userRepository.findOneById(userId);
   }
 
