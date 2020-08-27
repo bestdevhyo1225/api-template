@@ -1,6 +1,6 @@
-import { validateOrReject, IsString, IsEmail, IsDefined, IsArray, ValidateNested } from 'class-validator';
-import { CreateProjectDtos } from '@web/http/dto/CreateProjectDtos';
 import { Type } from 'class-transformer';
+import { validateOrReject, IsString, IsEmail, IsDefined, IsArray, ValidateNested } from 'class-validator';
+import CreateProjectDto from '@web/http/dto/CreateProjectDtos';
 
 export default class CreateUserDto {
   @IsDefined({ message: 'email은 undefined가 될 수 없습니다.' })
@@ -18,8 +18,8 @@ export default class CreateUserDto {
   @IsDefined({ message: 'projects은 undefined가 될 수 없습니다.' })
   @IsArray({ message: 'projects는 Array 형식을 유지해야 합니다.' })
   @ValidateNested({ each: true })
-  @Type(() => CreateProjectDtos)
-  private projects: Array<CreateProjectDtos> = [];
+  @Type(() => CreateProjectDto)
+  private projects: Array<CreateProjectDto> = [];
 
   public setEmail(email: string): CreateUserDto {
     this.email = email;
@@ -37,7 +37,7 @@ export default class CreateUserDto {
   }
 
   public setProjects(projects: Array<{ name: string }>): CreateUserDto {
-    this.projects = projects.map(({ name }: { name: string }) => new CreateProjectDtos().setName(name));
+    this.projects = projects.map(({ name }: { name: string }) => new CreateProjectDto().setName(name));
     return this;
   }
 
@@ -54,7 +54,7 @@ export default class CreateUserDto {
   }
 
   public getProjects(): Array<{ name: string }> {
-    return this.projects.map((project: CreateProjectDtos) => {
+    return this.projects.map((project: CreateProjectDto) => {
       return { name: project.getName() };
     });
   }
