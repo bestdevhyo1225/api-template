@@ -25,6 +25,8 @@
     "lines-between-class-members": "off",
     "@typescript-eslint/quotes": "off",
     "@typescript-eslint/no-explicit-any": "error",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "import/extensions": "off",
+    "no-param-reassign": "off"
   }
 }

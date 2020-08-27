@@ -16,7 +16,7 @@ export default class TypeOrmUserRepository extends Repository<User> implements U
     return this.findOne({ email });
   }
 
-  public async createOrUpdateOf(user: User): Promise<User> {
+  public async createOrUpdate(user: User): Promise<User> {
     return this.save(user);
   }
 }

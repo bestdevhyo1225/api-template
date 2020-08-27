@@ -8,9 +8,9 @@ import GetService from '@domain/usecase/user/GetService';
 import CommandService from '@domain/usecase/user/CommandService';
 
 import { validCreateUserDto, validLoginUserDto, validUpdateUserDto } from '@infrastructure/koa/Middleware';
-import CreateUserDto from '@web/http/dto/CreateUserDto';
 import LoginUserDto from '@web/http/dto/LoginUserDto';
-import UpdateUserDto from '@web/http/dto/UpdateUserDto';
+import ViewUserDetailDto from '@web/http/dto/ViewUserDetailDto';
+// import UpdateUserDto from '@web/http/dto/UpdateUserDto';
 
 @route('/users')
 export default class UserController {
@@ -26,7 +26,9 @@ export default class UserController {
   public async findUsers(ctx: Context): Promise<Context> {
     const findUsers: Array<User> = await this.getService.findUsers();
 
-    const users: Array<ViewUserDto> = findUsers.map((user: User) => ViewUserDto.of(user));
+    const users: Array<ViewUserDto> = findUsers.map((user: User) => {
+      return ViewUserDto.of(user);
+    });
 
     return ctx.success({ items: users });
   }
@@ -36,11 +38,11 @@ export default class UserController {
   public async findUser(ctx: Context): Promise<Context> {
     const { id } = ctx.params;
 
-    const strFindUser: string | null = await this.getService.findUserByRedis(id);
-
-    if (strFindUser && strFindUser.length > 0) {
-      return ctx.success({ ...JSON.parse(strFindUser) });
-    }
+    // const strFindUser: string | null = await this.getService.findUserByRedis(id);
+    //
+    // if (strFindUser && strFindUser.length > 0) {
+    //   return ctx.success({ ...JSON.parse(strFindUser) });
+    // }
 
     const findUser: User | undefined = await this.getService.findUser(id);
 
@@ -49,9 +51,9 @@ export default class UserController {
       return ctx.error('해당 유저를 찾을 수 없습니다.');
     }
 
-    const user: ViewUserDto = ViewUserDto.of(findUser);
+    const user: ViewUserDetailDto = await ViewUserDetailDto.of(findUser);
 
-    await this.commandService.createUserOfRedis(user);
+    // await this.commandService.createUserOfRedis(user);
 
     return ctx.success({ ...user });
   }
@@ -63,7 +65,7 @@ export default class UserController {
     const { createUserDto } = ctx.request.body;
 
     try {
-      const createdUserId: bigint = await this.commandService.createOrUpdateUser(CreateUserDto.toEntity(createUserDto));
+      const createdUserId: number = await this.commandService.createUser(createUserDto);
 
       return ctx.success({ createdUserId });
     } catch (error) {
@@ -99,9 +101,11 @@ export default class UserController {
     const { updateUserDto } = ctx.request.body;
 
     try {
-      const updatedUserId: bigint = await this.commandService.createOrUpdateUser(UpdateUserDto.toEntity(updateUserDto));
+      const updateUser: User = await this.commandService.updateUser(updateUserDto);
 
-      return ctx.success({ updatedUserId });
+      const user: ViewUserDetailDto = await ViewUserDetailDto.of(updateUser);
+
+      return ctx.success({ user });
     } catch (error) {
       ctx.status = 500;
       return ctx.error('Internal Server Error');
