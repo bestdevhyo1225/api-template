@@ -4,10 +4,14 @@ import UpdateUserDto from '@web/http/dto/UpdateUserDto';
 import LoginUserDto from '@web/http/dto/LoginUserDto';
 
 export const validCreateUserDto = async (ctx: Context, next: Next) => {
-  const { email, password, username } = ctx.request.body;
+  const { email, password, username, projects } = ctx.request.body;
 
   try {
-    const createUserDto = new CreateUserDto().setEmail(email).setPassword(password).setUsername(username);
+    const createUserDto: CreateUserDto = new CreateUserDto()
+      .setEmail(email)
+      .setPassword(password)
+      .setUsername(username)
+      .setProjects(projects);
 
     await createUserDto.validate();
 
@@ -15,7 +19,10 @@ export const validCreateUserDto = async (ctx: Context, next: Next) => {
 
     return next();
   } catch (error) {
-    const messages = error.map(({ constraints }) => constraints);
+    const messages = error.map(({ constraints, children }) => {
+      if (constraints) return constraints;
+      return children[0].children[0].constraints;
+    });
     return ctx.throw(400, JSON.stringify({ status: 'error', messages }));
   }
 };

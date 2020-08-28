@@ -1,13 +1,13 @@
 import { User } from '@domain/entity/User';
 
 export default class ViewUserDto {
-  private id: bigint = 0n;
+  private id: number = 0;
 
   private email: string = '';
 
   private username: string = '';
 
-  private setId(id: bigint): ViewUserDto {
+  private setId(id: number): ViewUserDto {
     this.id = id;
     return this;
   }
@@ -22,7 +22,7 @@ export default class ViewUserDto {
     return this;
   }
 
-  public getId(): bigint {
+  public getId(): number {
     return this.id;
   }
 

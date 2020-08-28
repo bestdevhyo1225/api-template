@@ -26,7 +26,7 @@ services:
     tty: true
     links:
       - my-boilerplate-api-mysql
-      - my-boilerplate-api-redis
+  #      - my-boilerplate-api-redis
 
   my-boilerplate-api-mysql:
     image: mysql:8
@@ -39,15 +39,14 @@ services:
       MYSQL_ROOT_PASSWORD: example
       MYSQL_DATABASE: api_dev
       TZ: Asia/Seoul
-
-  my-boilerplate-api-redis:
-    image: redis:5.0-alpine
-    container_name: my-boilerplate-api-redis
-    command: >
-      sh -c
-      redis-server ./redis.conf
-    restart: always
-    ports:
-      - '9002:6379'
-    volumes:
-      - ./redis.conf:/data/redis.conf
+#  my-boilerplate-api-redis:
+#    image: redis:5.0-alpine
+#    container_name: my-boilerplate-api-redis
+#    command: >
+#      sh -c
+#      redis-server ./redis.conf
+#    restart: always
+#    ports:
+#      - '9002:6379'
+#    volumes:
+#      - ./redis.conf:/data/redis.conf
