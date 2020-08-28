@@ -1,5 +1,6 @@
-import { validateOrReject, IsString, IsEmail, IsDefined } from 'class-validator';
-import { User } from '@domain/entity/User';
+import { Type } from 'class-transformer';
+import { validateOrReject, IsString, IsEmail, IsDefined, IsArray, ValidateNested } from 'class-validator';
+import CreateProjectDto from '@web/http/dto/CreateProjectDtos';
 
 export default class CreateUserDto {
   @IsDefined({ message: 'email은 undefined가 될 수 없습니다.' })
@@ -13,6 +14,12 @@ export default class CreateUserDto {
   @IsDefined({ message: 'username은 undefined가 될 수 없습니다.' })
   @IsString({ message: 'username은 string값이어야 합니다.' })
   private username: string = '';
+
+  @IsDefined({ message: 'projects은 undefined가 될 수 없습니다.' })
+  @IsArray({ message: 'projects는 Array 형식을 유지해야 합니다.' })
+  @ValidateNested({ each: true })
+  @Type(() => CreateProjectDto)
+  private projects: Array<CreateProjectDto> = [];
 
   public setEmail(email: string): CreateUserDto {
     this.email = email;
@@ -29,6 +36,11 @@ export default class CreateUserDto {
     return this;
   }
 
+  public setProjects(projects: Array<{ name: string }>): CreateUserDto {
+    this.projects = projects.map(({ name }: { name: string }) => new CreateProjectDto().setName(name));
+    return this;
+  }
+
   public getEmail(): string {
     return this.email;
   }
@@ -41,17 +53,13 @@ export default class CreateUserDto {
     return this.username;
   }
 
-  public async validate(): Promise<void> {
-    await validateOrReject(this);
+  public getProjects(): Array<{ name: string }> {
+    return this.projects.map((project: CreateProjectDto) => {
+      return { name: project.getName() };
+    });
   }
 
-  public static toEntity(createUserDto: CreateUserDto): User {
-    const user: User = new User();
-
-    user.email = createUserDto.getEmail();
-    user.password = createUserDto.getPassword();
-    user.username = createUserDto.getUsername();
-
-    return user;
+  public async validate(): Promise<void> {
+    await validateOrReject(this);
   }
 }

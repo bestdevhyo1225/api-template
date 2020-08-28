@@ -1,10 +1,9 @@
 import { IsDefined, IsEmail, IsOptional, IsPositive, IsString, validateOrReject } from 'class-validator';
-import { User } from '@domain/entity/User';
 
 export default class UpdateUserDto {
   @IsDefined({ message: 'id는 undefined가 될 수 없습니다.' })
   @IsPositive({ message: 'id는 양수 값이어야 합니다.' })
-  private id: bigint = 1n;
+  private id: number = 1;
 
   @IsOptional()
   @IsEmail({}, { message: 'email은 email 형식을 유지해야 합니다.' })
@@ -18,7 +17,7 @@ export default class UpdateUserDto {
   @IsString({ message: 'username은 string값이어야 합니다.' })
   private username: string = '';
 
-  public setId(id: bigint): UpdateUserDto {
+  public setId(id: number): UpdateUserDto {
     this.id = id;
     return this;
   }
@@ -38,7 +37,7 @@ export default class UpdateUserDto {
     return this;
   }
 
-  public getId(): bigint {
+  public getId(): number {
     return this.id;
   }
 
@@ -56,16 +55,5 @@ export default class UpdateUserDto {
 
   public async validate(): Promise<void> {
     await validateOrReject(this);
-  }
-
-  public static toEntity(updateUserDto: UpdateUserDto): User {
-    const user: User = new User();
-
-    user.id = updateUserDto.getId();
-    user.email = updateUserDto.getEmail();
-    user.password = updateUserDto.getPassword();
-    user.username = updateUserDto.getUsername();
-
-    return user;
   }
 }

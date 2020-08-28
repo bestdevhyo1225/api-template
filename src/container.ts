@@ -1,10 +1,13 @@
 import path from 'path';
-import { Commands } from 'ioredis';
+// import { Commands } from 'ioredis';
 import { Connection } from 'typeorm';
 import { createContainer, asClass, InjectionMode, Lifetime, AwilixContainer, asFunction } from 'awilix';
 import TypeOrmUserRepository from '@data/user/TypeOrmUserRepository';
 
-export const initContainer = async (dbConnection: Connection, redisConnection: Commands): Promise<AwilixContainer> => {
+export const initContainer = async (
+  dbConnection: Connection | null,
+  // redisConnection: Commands | null,
+): Promise<AwilixContainer> => {
   const container: AwilixContainer = createContainer({
     injectionMode: InjectionMode.CLASSIC,
   });
@@ -21,22 +24,26 @@ export const initContainer = async (dbConnection: Connection, redisConnection: C
     },
   );
 
-  // TypeOrm Connection Injection
-  container.register({
-    typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
-  });
+  if (dbConnection) {
+    // TypeOrm Connection Injection
+    container.register({
+      typeOrmConnection: asFunction(() => dbConnection, { lifetime: Lifetime.TRANSIENT }),
+    });
 
-  // Redis Connection Injection
-  container.register({
-    ioRedisConnection: asFunction(() => redisConnection, { lifetime: Lifetime.TRANSIENT }),
-  });
+    // Custom Repository
+    container.register({
+      typeOrmUserRepository: asFunction(() => dbConnection.getCustomRepository(TypeOrmUserRepository), {
+        lifetime: Lifetime.TRANSIENT,
+      }),
+    });
+  }
 
-  // Custom Repository
-  container.register({
-    typeOrmUserRepository: asFunction(() => dbConnection.getCustomRepository(TypeOrmUserRepository), {
-      lifetime: Lifetime.TRANSIENT,
-    }),
-  });
+  // if (redisConnection) {
+  //   // Redis Connection Injection
+  //   container.register({
+  //     ioRedisConnection: asFunction(() => redisConnection, { lifetime: Lifetime.TRANSIENT }),
+  //   });
+  // }
 
   // eslint-disable-next-line no-console
   console.log(container);
