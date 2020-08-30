@@ -11,7 +11,7 @@ export class Project extends BaseEntity {
 
   @ManyToOne(() => User, (user: User) => user.id)
   @JoinColumn({ name: 'user_id' })
-  user!: User;
+  user!: Promise<User>; // 지연로딩을 위해서 Promise 설정
 
   private static createProject(name: string): Project {
     const project: Project = new Project();
